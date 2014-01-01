@@ -26,6 +26,7 @@
 		D8196A5518728B6800F241DC /* RSSItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8196A5418728B6800F241DC /* RSSItemViewCell.m */; };
 		D8196A5718728BC400F241DC /* RSSItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8196A5618728BC400F241DC /* RSSItemViewCell.xib */; };
 		D82602641873756800FB461A /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82602631873756800FB461A /* ChannelViewController.m */; };
+		D8260267187448FD00FB461A /* RSSThread.m in Sources */ = {isa = PBXBuildFile; fileRef = D8260266187448FD00FB461A /* RSSThread.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		D8196A5618728BC400F241DC /* RSSItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSSItemViewCell.xib; sourceTree = "<group>"; };
 		D82602621873756800FB461A /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
 		D82602631873756800FB461A /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
+		D8260265187448FD00FB461A /* RSSThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSThread.h; sourceTree = "<group>"; };
+		D8260266187448FD00FB461A /* RSSThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSThread.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +102,6 @@
 			children = (
 				D8196A471872611A00F241DC /* ListViewController.h */,
 				D8196A481872611A00F241DC /* ListViewController.m */,
-				D8196A4A187271E600F241DC /* RSSItem.h */,
-				D8196A4B187271E600F241DC /* RSSItem.m */,
-				D8196A4D1872720D00F241DC /* RSSChannel.h */,
-				D8196A4E1872720D00F241DC /* RSSChannel.m */,
 				D8196A501872824B00F241DC /* WebViewController.h */,
 				D8196A511872824B00F241DC /* WebViewController.m */,
 				D8196A5318728B6800F241DC /* RSSItemViewCell.h */,
@@ -110,6 +109,12 @@
 				D8196A5618728BC400F241DC /* RSSItemViewCell.xib */,
 				D82602621873756800FB461A /* ChannelViewController.h */,
 				D82602631873756800FB461A /* ChannelViewController.m */,
+				D8196A4D1872720D00F241DC /* RSSChannel.h */,
+				D8196A4E1872720D00F241DC /* RSSChannel.m */,
+				D8260265187448FD00FB461A /* RSSThread.h */,
+				D8260266187448FD00FB461A /* RSSThread.m */,
+				D8196A4A187271E600F241DC /* RSSItem.h */,
+				D8196A4B187271E600F241DC /* RSSItem.m */,
 				D8196A1E187260F300F241DC /* Nerdfeed */,
 				D8196A37187260F400F241DC /* NerdfeedTests */,
 				D8196A17187260F300F241DC /* Frameworks */,
@@ -280,6 +285,7 @@
 				D8196A521872824B00F241DC /* WebViewController.m in Sources */,
 				D8196A29187260F300F241DC /* NerdfeedAppDelegate.m in Sources */,
 				D8196A491872611A00F241DC /* ListViewController.m in Sources */,
+				D8260267187448FD00FB461A /* RSSThread.m in Sources */,
 				D8196A4C187271E600F241DC /* RSSItem.m in Sources */,
 				D8196A4F1872720D00F241DC /* RSSChannel.m in Sources */,
 			);

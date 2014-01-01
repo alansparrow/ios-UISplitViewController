@@ -23,6 +23,7 @@ NSXMLParserDelegate>
 }
 
 @property (nonatomic, strong) WebViewController *webViewController;
+@property (nonatomic, strong) NSNumber *numOfRows;
 
 - (void)fetchEntries;
 

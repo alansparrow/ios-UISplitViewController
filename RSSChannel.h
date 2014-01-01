@@ -18,8 +18,11 @@
 
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *infoString;
+
+@property (nonatomic, readonly, strong) NSMutableArray *threads;
 @property (nonatomic, readonly, strong) NSMutableArray *items;
 
 - (void)trimItemTitles;
+- (void)setupThreads;
 
 @end

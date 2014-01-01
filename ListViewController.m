@@ -24,6 +24,7 @@
 @implementation ListViewController
 
 @synthesize webViewController;
+@synthesize numOfRows;
 
 - (void)transferBarButtonToViewController:(UIViewController *)vc
 {
@@ -52,7 +53,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[channel items] count];
+    return [numOfRows integerValue];//[[channel items] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -70,9 +71,38 @@
     //[[cell textLabel] setText:[item title]];
     
     //[cell setExclusiveTouch:YES];
+    [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
     
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView
+accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSLog(@"Tapped");
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath *indexPath3 = [NSIndexPath indexPathForRow:3 inSection:0];
+    NSIndexPath *indexPath4 = [NSIndexPath indexPathForRow:4 inSection:0];
+    NSArray *indexPaths = [NSArray arrayWithObjects:indexPath1,
+                           indexPath2,
+                           indexPath3,
+                           indexPath4, nil];
+    
+    
+    if ([[self numOfRows] integerValue] == 5) {
+        [self setNumOfRows:[NSNumber numberWithInt:1]];
+        [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:YES];
+        [tableView reloadData];
+    } else {
+        [self setNumOfRows:[NSNumber numberWithInt:5]];
+        [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:YES];
+        [tableView reloadData];
+    }
+}
+
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -110,6 +140,8 @@
     self = [super initWithStyle:style];
     
     if (self) {
+        [self setNumOfRows:[NSNumber numberWithInt:1]];
+        
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:@"Info"
                                                                 style:UIBarButtonItemStyleBordered
                                                                target:self action:@selector(showInfo:)];
@@ -207,10 +239,10 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn
 {
     /*
-    // We are just checking to make sure we are getting the XML
-    NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
-                                               encoding:NSUTF8StringEncoding];
-    NSLog(@"xmlCheck = %@", xmlCheck);
+     // We are just checking to make sure we are getting the XML
+     NSString *xmlCheck = [[NSString alloc] initWithData:xmlData
+     encoding:NSUTF8StringEncoding];
+     NSLog(@"xmlCheck = %@", xmlCheck);
      */
     
     // Create the parser object with the data received from the web service
@@ -224,6 +256,7 @@
     // delegate messages sent to it before this line finishes
     // execution - it is blocking
     [parser parse];
+    
     
     // Get rid of the XML data as we no longer need it
     xmlData = nil;

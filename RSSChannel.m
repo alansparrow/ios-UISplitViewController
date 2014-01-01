@@ -86,7 +86,7 @@
 - (void)trimItemTitles
 {
     // Create a regular expression with the pattern: Author
-    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@".* :: (.*) :: .*"
+    NSRegularExpression *reg = [[NSRegularExpression alloc] initWithPattern:@"(.*) :: (.*) :: .*"
                                                                     options:0
                                                                       error:nil];
     
@@ -105,20 +105,47 @@
             // Print the location of the match in the string
             // and the string
             NSTextCheckingResult *result = [matches objectAtIndex:0];
-            NSRange r = [result range];
-            NSLog(@"Match at {%d, %d} for %@!", r.location, r.length, itemTitle);
+            NSLog(@"{%d %d}", [[matches objectAtIndex:0] rangeAtIndex:0].location,
+                  [[matches objectAtIndex:0] rangeAtIndex:0].length);
+            
+            NSLog(@"Num of range: %d", [result numberOfRanges]);
+            
             
             // One capture group, so two ranges, let's verify
-            if ([result numberOfRanges] == 2) {
+            if ([result numberOfRanges] > 1) {
                 // Pull out the 2nd range, which will be the capture group
-                NSRange r = [result rangeAtIndex:1];
+                NSRange r = [result rangeAtIndex:2];
+                NSLog(@"{%d %d}", r.location, r.length);
+                NSString *trimmedTitle = [itemTitle substringWithRange:r];
+                NSLog(@"trimmed %@", trimmedTitle);
+                
+                // Fix the Re:
+                NSRegularExpression *reg1 = [[NSRegularExpression alloc] initWithPattern:@"(Re: )*(.*)"
+                                                           options:0
+                                                             error:nil];
+                matches = [reg1 matchesInString:trimmedTitle
+                                       options:0
+                                         range:NSMakeRange(0, [trimmedTitle length])];
+                // If there was a match...
+                if ([matches count] > 0) {
+                    result = [matches objectAtIndex:0];
+                    if ([result numberOfRanges] > 1) {
+                        r = [result rangeAtIndex:2];
+                        [i setTitle:[trimmedTitle substringWithRange:r]];
+                    }
+                }
                 
                 // Set the title of the item to the string within the capture group
-                [i setTitle:[itemTitle substringWithRange:r]];
+                    //[i setTitle:[itemTitle substringWithRange:r]];
             }
             
         }
     }
+}
+
+- (void)setupThreads
+{
+    
 }
 
 @end

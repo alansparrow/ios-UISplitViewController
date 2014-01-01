@@ -11,6 +11,8 @@
 @implementation RSSItem
 
 @synthesize title, link, parentParserDelegate;
+@synthesize parentItem;
+
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI

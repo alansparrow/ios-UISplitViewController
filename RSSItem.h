@@ -20,5 +20,6 @@
 @property (nonatomic, strong) NSString *link;
 @property (nonatomic, strong) NSString *author;
 @property (nonatomic, strong) NSString *category;
+@property (nonatomic, strong) RSSItem *parentItem;
 
 @end
