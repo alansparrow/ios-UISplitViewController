@@ -11,13 +11,44 @@
 #import "RSSItem.h"
 #import "WebViewController.h"
 #import "RSSItemViewCell.h"
+#import "ChannelViewController.h"
 
-#define WSLog(...) NSLog(__VA_ARGS__)
-//#define WSLog(...) do {} while (0)
+//#define WSLog(...) NSLog(__VA_ARGS__)
+#define WSLog(...) do {} while (0)
+
+@interface ListViewController()
+- (void)transferBarButtonToViewController:(UIViewController *)vc;
+
+@end
 
 @implementation ListViewController
 
 @synthesize webViewController;
+
+- (void)transferBarButtonToViewController:(UIViewController *)vc
+{
+    // Get the navigation controller in the detail spot of the split view
+    // controller
+    UINavigationController *nvc = [[[self splitViewController] viewControllers]
+                                   objectAtIndex:1];
+    
+    // Get the root view controller out of that nav controller
+    UIViewController *currentVC = [[nvc viewControllers] objectAtIndex:0];
+    
+    // If it's the same view controller, let's not do anything
+    if (vc == currentVC) {
+        return;
+    }
+    
+    // Get that view controller's navigation item
+    UINavigationItem *currentVCItem = [currentVC navigationItem];
+    
+    // Tell new view controller to use left bar button item of current nav item
+    [[vc navigationItem] setLeftBarButtonItem:[currentVCItem leftBarButtonItem]];
+    
+    // Remove the bar button item from the current view controller's nav item
+    [currentVCItem setLeftBarButtonItem:nil];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -31,7 +62,7 @@
                              dequeueReusableCellWithIdentifier:@"RSSItemViewCell"];
     
     RSSItem *item = [[channel items] objectAtIndex:[indexPath row]];
-    WSLog(@"======%@", [item title]);
+    //WSLog(@"======%@", [item title]);
     [[cell titleTextField] setText:[item title]];
     [[cell authorTextField] setText:[item author]];
     [[cell categoryTextField] setText:[item category]];
@@ -79,10 +110,90 @@
     self = [super initWithStyle:style];
     
     if (self) {
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithTitle:@"Info"
+                                                                style:UIBarButtonItemStyleBordered
+                                                               target:self action:@selector(showInfo:)];
+        [[self navigationItem] setRightBarButtonItem:bbi];
+        
         [self fetchEntries];
     }
     
     return self;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Push the web view controller onto the navigation stack
+    // this implicitly creates the web view controller's view
+    // the first time though
+    if (![self splitViewController]) {
+        [[self navigationController] pushViewController:webViewController
+                                               animated:YES];
+    } else {
+        [self transferBarButtonToViewController:webViewController];
+        // We have to create a new navigation controller, as the old one
+        // was only retained by the split view controller
+        // and now gone
+        UINavigationController *nav = [[UINavigationController alloc]
+                                       initWithRootViewController:webViewController];
+        
+        // Fix bug of List button
+        
+        
+        NSArray *vcs = [NSArray arrayWithObjects:[self navigationController],
+                        nav, nil];
+        
+        [[self splitViewController] setViewControllers:vcs];
+        
+        // Make the detail view controller the delegate of the
+        // split view controller
+        [[self splitViewController] setDelegate:webViewController];
+    }
+    
+    // Grab the selected item
+    RSSItem *entry = [[channel items] objectAtIndex:[indexPath row]];
+    
+    [webViewController listViewController:self handleObject:entry];
+}
+
+- (void)showInfo:(id)sender
+{
+    // Create the channel view controller
+    ChannelViewController *channelViewController = [[ChannelViewController alloc]
+                                                    initWithStyle:UITableViewStyleGrouped];
+    
+    if ([self splitViewController]) {
+        [self transferBarButtonToViewController:channelViewController];
+        
+        UINavigationController *nvc = [[UINavigationController alloc]
+                                       initWithRootViewController:channelViewController];
+        
+        // Create an array with our nav controller and this new VC's nav controller
+        NSArray *vcs = [NSArray arrayWithObjects:[self navigationController],
+                        nvc, nil];
+        
+        // Grab a pointer to the split view controller
+        // and reset its view controllers array.
+        [[self splitViewController] setViewControllers:vcs];
+        
+        // Make detail view controller the delegate of the split view controller
+        // ignore this warning
+        [[self splitViewController] setDelegate:channelViewController];
+        
+        // If a row has been selected, deselect it so that
+        // a row is not selected when viewing the info
+        NSIndexPath *selectedRow = [[self tableView] indexPathForSelectedRow];
+        
+        if (selectedRow) {
+            [[self tableView] deselectRowAtIndexPath:selectedRow animated:YES];
+        }
+    } else {
+        [[self navigationController] pushViewController:channelViewController
+                                               animated:YES];
+    }
+    
+    // Give the VC the channel object through the protocol message
+    [channelViewController listViewController:self handleObject:channel];
 }
 
 // This method will be called several times as the data arrives
@@ -170,29 +281,7 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Push the web view controller onto the navigation stack
-    // this implicitly creates the web view controller's view
-    // the first time though
-    [[self navigationController] pushViewController:webViewController
-                                           animated:YES];
-    
-    // Grab the selected item
-    RSSItem *entry = [[channel items] objectAtIndex:[indexPath row]];
-    
-    // Construct a URL with the link string of the item
-    NSURL *url = [NSURL URLWithString:[entry link]];
-    
-    // Construct a request object with that URL
-    NSURLRequest *req = [NSURLRequest requestWithURL:url];
-    
-    // Load the request into the web view
-    [[webViewController webView] loadRequest:req];
-    
-    // Set the title of the web view controller's navigation item
-    [[webViewController navigationItem] setTitle:[entry title]];
-}
+
 
 - (void)viewDidLoad
 {
@@ -205,6 +294,18 @@
     [[self tableView] registerNib:nib
            forCellReuseIdentifier:@"RSSItemViewCell"];
 }
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] ==
+        UIUserInterfaceIdiomPad) {
+        return YES;
+    }
+    
+    return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+}
+
+
 
 
 @end

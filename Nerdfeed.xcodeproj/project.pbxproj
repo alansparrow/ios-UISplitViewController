@@ -25,6 +25,7 @@
 		D8196A521872824B00F241DC /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8196A511872824B00F241DC /* WebViewController.m */; };
 		D8196A5518728B6800F241DC /* RSSItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D8196A5418728B6800F241DC /* RSSItemViewCell.m */; };
 		D8196A5718728BC400F241DC /* RSSItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8196A5618728BC400F241DC /* RSSItemViewCell.xib */; };
+		D82602641873756800FB461A /* ChannelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D82602631873756800FB461A /* ChannelViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		D8196A5318728B6800F241DC /* RSSItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSItemViewCell.h; sourceTree = "<group>"; };
 		D8196A5418728B6800F241DC /* RSSItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSItemViewCell.m; sourceTree = "<group>"; };
 		D8196A5618728BC400F241DC /* RSSItemViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSSItemViewCell.xib; sourceTree = "<group>"; };
+		D82602621873756800FB461A /* ChannelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChannelViewController.h; sourceTree = "<group>"; };
+		D82602631873756800FB461A /* ChannelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChannelViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				D8196A5318728B6800F241DC /* RSSItemViewCell.h */,
 				D8196A5418728B6800F241DC /* RSSItemViewCell.m */,
 				D8196A5618728BC400F241DC /* RSSItemViewCell.xib */,
+				D82602621873756800FB461A /* ChannelViewController.h */,
+				D82602631873756800FB461A /* ChannelViewController.m */,
 				D8196A1E187260F300F241DC /* Nerdfeed */,
 				D8196A37187260F400F241DC /* NerdfeedTests */,
 				D8196A17187260F300F241DC /* Frameworks */,
@@ -271,6 +276,7 @@
 			files = (
 				D8196A25187260F300F241DC /* main.m in Sources */,
 				D8196A5518728B6800F241DC /* RSSItemViewCell.m in Sources */,
+				D82602641873756800FB461A /* ChannelViewController.m in Sources */,
 				D8196A521872824B00F241DC /* WebViewController.m in Sources */,
 				D8196A29187260F300F241DC /* NerdfeedAppDelegate.m in Sources */,
 				D8196A491872611A00F241DC /* ListViewController.m in Sources */,
@@ -399,8 +405,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nerdfeed/Nerdfeed-Prefix.pch";
 				INFOPLIST_FILE = "Nerdfeed/Nerdfeed-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -413,8 +420,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Nerdfeed/Nerdfeed-Prefix.pch";
 				INFOPLIST_FILE = "Nerdfeed/Nerdfeed-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -480,6 +488,7 @@
 				D8196A43187260F400F241DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D8196A44187260F400F241DC /* Build configuration list for PBXNativeTarget "NerdfeedTests" */ = {
 			isa = XCConfigurationList;
@@ -488,6 +497,7 @@
 				D8196A46187260F400F241DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

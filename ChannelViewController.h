@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ListViewController.h"
 
-@interface ChannelViewController : NSObject
+@class RSSChannel;
+
+@interface ChannelViewController : UITableViewController <ListViewControllerDelegate,
+UISplitViewControllerDelegate>
+
+{
+    RSSChannel *channel;
+}
+
 
 @end

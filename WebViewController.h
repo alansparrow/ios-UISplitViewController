@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+// Must import this file as it is where ListViewControllerDelegate is declared
+#import "ListViewController.h"
 
-@interface WebViewController : UIViewController <UIWebViewDelegate>
+@interface WebViewController : UIViewController <UIWebViewDelegate, UISplitViewControllerDelegate,
+ListViewControllerDelegate>
 
 {
     UIBarButtonItem *forwardBtn;
